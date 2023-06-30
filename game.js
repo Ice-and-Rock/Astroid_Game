@@ -9,6 +9,7 @@ canvas.height = window.innerHeight;
 // - add event listener for the down button to go backwards
 // - + go backwards at half speed 
 // - look at making asteroids move diagonally
+// - Render gameover when function 'circleTriangleCollision' runs 
 
 
 class Player {
@@ -173,6 +174,7 @@ const intervalId = window.setInterval(() => {
       break;
   }
 
+  // add asteroids to the array
   asteroids.push(
     new Asteroid({
       position: {
@@ -190,6 +192,7 @@ const intervalId = window.setInterval(() => {
   console.log(asteroids);
 }, 3000);
 
+// a function to determain whther asteroid and projective are touching
 function circleCollision(circle1, circle2) {
   const xDifference = circle2.position.x - circle1.position.x;
   const yDifference = circle2.position.y - circle1.position.y;
@@ -206,6 +209,7 @@ function circleCollision(circle1, circle2) {
   return false;
 }
 
+// this will eventually render GAMEOVER**
 function circleTriangleCollision(circle, triangle) {
   // Check if the circle is colliding with any of the triangle's edges
   // initiates freezing the game 
@@ -237,6 +241,8 @@ function circleTriangleCollision(circle, triangle) {
 
     if (distance <= circle.radius) {
       return true;
+      // Stretch goal 
+      // + have the message GAMEOVER render and options to start again??
     }
   }
 
