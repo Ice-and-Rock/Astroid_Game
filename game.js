@@ -1,16 +1,16 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
+let gameOver = false;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// stretch goals 
+// stretch goals
 // - have the ateroids break into smaller circles
 // - add event listener for the down button to go backwards
-// - + go backwards at half speed 
+// - + go backwards at half speed
 // - look at making asteroids move diagonally
-// - Render gameover when function 'circleTriangleCollision' runs 
-
+// - Render gameover when function 'circleTriangleCollision' runs
 
 class Player {
   constructor({ position, velocity }) {
@@ -133,10 +133,10 @@ const keys = {
   },
 };
 
-const SPEED = 7;
+const SPEED = 3;
 const ROTATIONAL_SPEED = 0.15;
 const FRICTION = 0.97;
-const PROJECTILE_SPEED = 3;
+const PROJECTILE_SPEED = 8;
 
 const projectiles = [];
 const asteroids = [];
@@ -212,7 +212,7 @@ function circleCollision(circle1, circle2) {
 // this will eventually render GAMEOVER**
 function circleTriangleCollision(circle, triangle) {
   // Check if the circle is colliding with any of the triangle's edges
-  // initiates freezing the game 
+  // initiates freezing the game
   for (let i = 0; i < 3; i++) {
     let start = triangle[i];
     let end = triangle[(i + 1) % 3];
@@ -240,8 +240,10 @@ function circleTriangleCollision(circle, triangle) {
     let distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance <= circle.radius) {
+      // Gameover function runs
+      gameOver = true;
       return true;
-      // Stretch goal 
+      // Stretch goal
       // + have the message GAMEOVER render and options to start again??
     }
   }
@@ -263,6 +265,17 @@ function animate() {
   const animationId = window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
+
+  // GAMEOVER message
+  if (gameOver) {
+    // Render "gameover" message
+    c.fillStyle = "white";
+    c.font = "bold 48px Arial";
+    c.textAlign = "center";
+    c.fillText("GameOver", canvas.width / 2, canvas.height / 2);
+    // below stops rendering game elements
+    return;
+  }
 
   player.update();
 
@@ -359,7 +372,7 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-// event listeners for the hot keys 
+// event listeners for the hot keys
 // no backwards - stretch goal?
 window.addEventListener("keyup", (event) => {
   switch (event.code) {
