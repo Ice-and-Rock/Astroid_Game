@@ -1,0 +1,11 @@
+Additions based on feedback:
+- ✅ Add a 'game over' message when when asteroid and triangle collide.
+    - capture the collision in a variable (boolean) and render if true
+    - The origional message was nested inside the ```collisionChecker``` . 2hrs spent. Doh!
+- ✅ Add a re-start button after GameOver
+    - Done but it's not a button, you click the screen to re-start
+- Add a score counter
+    - create a variable called 'score'
+    - add 1 to score each time an asteroid contacts the projectile
+- speed up asteroids more
+    - change VX / VY values (velocity of asteroid)

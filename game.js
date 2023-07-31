@@ -133,10 +133,10 @@ const keys = {
   },
 };
 
-const SPEED = 3;
+const SPEED = 4;
 const ROTATIONAL_SPEED = 0.15;
 const FRICTION = 0.97;
-const PROJECTILE_SPEED = 8;
+const PROJECTILE_SPEED = 10;
 
 const projectiles = [];
 const asteroids = [];
@@ -151,26 +151,26 @@ const intervalId = window.setInterval(() => {
     case 0: // left side of the screen without margin
       x = 0 - radius;
       y = Math.random() * canvas.height;
-      vx = 1;
+      vx = 3;
       vy = 0;
       break;
     case 1: // bottom side of the screen without margin
       x = Math.random() * canvas.width;
       y = canvas.height + radius;
       vx = 0;
-      vy = -1;
+      vy = -4;
       break;
     case 2: // right side of the screen without margin
       x = canvas.width + radius;
       y = Math.random() * canvas.height;
-      vx = -1;
+      vx = -2;
       vy = 0;
       break;
     case 3: // top side of the screen without margin
       x = Math.random() * canvas.width;
       y = 0 - radius;
       vx = 0;
-      vy = 1;
+      vy = 3;
       break;
   }
 
@@ -189,7 +189,7 @@ const intervalId = window.setInterval(() => {
     })
   );
 
-  console.log(asteroids);
+  console.log('Test Asteroid' + asteroids);
 }, 3000);
 
 // a function to determain whther asteroid and projective are touching
@@ -265,17 +265,9 @@ function animate() {
   const animationId = window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
+  console.log('animate running')
 
-  // GAMEOVER message
-  if (gameOver) {
-    // Render "gameover" message
-    c.fillStyle = "white";
-    c.font = "bold 48px Arial";
-    c.textAlign = "center";
-    c.fillText("GameOver", canvas.width / 2, canvas.height / 2);
-    // below stops rendering game elements
-    return;
-  }
+
 
   player.update();
 
@@ -299,8 +291,12 @@ function animate() {
     const asteroid = asteroids[i];
     asteroid.update();
 
+    // Collision checker
+    // - renders gameOver variable to true 
     if (circleTriangleCollision(asteroid, player.getVertices())) {
       console.log("GAME OVER");
+      gameOver = true;
+      console.log(gameOver)
       window.cancelAnimationFrame(animationId);
       clearInterval(intervalId);
     }
@@ -327,6 +323,37 @@ function animate() {
       }
     }
   }
+
+    // GAMEOVER message
+    // - moved to outside of the collision checker 
+    if (gameOver) {
+      console.log('Test 1' + typeof(gameOver))
+      // Render "gameover" message
+      c.fillStyle = "white";
+      c.font = "bold 100px Arial";
+      c.textAlign = "center";
+      c.fillText("GameOver", canvas.width / 2, canvas.height / 2);
+      
+    // UPDATE 31/07/23
+    // Draw restart button
+    c.fillStyle = "gray";
+    c.fillRect(
+      canvas.width / 2 - 100,
+      canvas.height / 2 + 50,
+      200,
+      60
+    );
+
+    c.fillStyle = "white";
+    c.font = "bold 32px Arial";
+    c.textAlign = "center";
+    c.fillText("Restart...", canvas.width / 2, canvas.height / 2 + 90);
+    
+      // below stops rendering game elements
+       // Stop rendering game elements and animations
+       window.cancelAnimationFrame(animationId);
+      return;
+    }
 
   if (keys.w.pressed) {
     player.velocity.x = Math.cos(player.rotation) * SPEED;
@@ -387,3 +414,29 @@ window.addEventListener("keyup", (event) => {
       break;
   }
 });
+
+
+
+// UPDATE 31/07/23
+// Handling click event on canvas
+canvas.addEventListener("click", (event) => {
+  // Check if the click was inside the button area
+  const buttonWidth = 200;
+  const buttonHeight = 60;
+  const buttonX = canvas.width / 2 - buttonWidth / 2;
+  const buttonY = canvas.height / 2 + 50;
+
+  const mouseX = event.clientX - canvas.offsetLeft;
+  const mouseY = event.clientY - canvas.offsetTop;
+
+  if (
+    mouseX >= buttonX &&
+    mouseX <= buttonX + buttonWidth &&
+    mouseY >= buttonY &&
+    mouseY <= buttonY + buttonHeight
+  ) {
+    // Reload the webpage when the button is clicked
+    location.reload();
+  }
+});
+
