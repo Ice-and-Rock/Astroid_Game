@@ -133,10 +133,10 @@ const keys = {
   },
 };
 
-const SPEED = 4;
+const SPEED = 3;
 const ROTATIONAL_SPEED = 0.15;
 const FRICTION = 0.97;
-const PROJECTILE_SPEED = 10;
+const PROJECTILE_SPEED = 8;
 
 const projectiles = [];
 const asteroids = [];
@@ -158,7 +158,7 @@ const intervalId = window.setInterval(() => {
       x = Math.random() * canvas.width;
       y = canvas.height + radius;
       vx = 0;
-      vy = -4;
+      vy = -3;
       break;
     case 2: // right side of the screen without margin
       x = canvas.width + radius;
@@ -244,7 +244,7 @@ function circleTriangleCollision(circle, triangle) {
       gameOver = true;
       return true;
       // Stretch goal
-      // + have the message GAMEOVER render and options to start again??
+      // ✅ have the message GAMEOVER render and options to start again
     }
   }
 
@@ -367,7 +367,19 @@ function animate() {
   else if (keys.a.pressed) player.rotation -= ROTATIONAL_SPEED;
 }
 
-animate();
+// UPDATE 31/07/23
+// Create a homeScreen
+// - canvas only renders once button is clicked
+// - homescreen disapears when button is clicked 
+function startGame() {
+  const welcomeScreen = document.getElementById("welcomeScreen");
+  const canvas = document.querySelector("canvas");
+  canvas.style.display = "block";
+  welcomeScreen.style.display = "none";
+
+  // Start the game by calling ANIMATE 
+  animate();
+}
 
 window.addEventListener("keydown", (event) => {
   switch (event.code) {

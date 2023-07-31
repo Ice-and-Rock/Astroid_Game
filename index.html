@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     body {
       margin: 0;
     }
@@ -7,3 +7,59 @@
   <canvas></canvas>
 
   <script src="./game.js"></script>
+
+  <!DOCTYPE html> -->
+
+<html>
+<head>
+    <title>Space Shooter Game</title>
+    <style>
+      body {
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background-color: black;
+          font-family: sans-serif;
+          color: white;
+      }
+      #welcomeScreen {
+          text-align: center;
+      }
+      button {
+            padding: 10px 20px;
+            background-color: #657985;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 32px;
+            cursor: pointer;
+            margin: 50px;
+        }
+        button:hover {
+            background-color: #2980b9;
+            box-shadow: 9px 9px 28px #484c62,
+             -9px -9px 28px #38383c;;
+        }
+  </style>
+</head>
+<body>
+    <div id="welcomeScreen">
+        <h1 style="color: white; font-family: Monaco;">* Welcome to my Space Shooter Game! *</h1>
+        <h3 style="color: white; font-family: Monaco;">[ Use A, W, D and spaceber to control your ship. ]</h3>
+
+        <button onclick="startGame()">Start Blasting!</button>
+
+        
+        
+        <h4 style="color: white; font-family: Monaco; margin-top: 100px;">Connect with me on LinkedIn:</h4>
+        <a href="https://www.linkedin.com/in/nicholas-valente-electrics/" target="_blank">
+            <img src="./icon - LinkedIn.png" alt="LinkedIn Profile" width="50" height="50">
+        </a>
+    </div>
+
+    <canvas style="display: none;"></canvas>
+    <script src="./game.js"></script>
+</body>
+</html>
