@@ -133,10 +133,10 @@ const keys = {
   },
 };
 
-const SPEED = 3;
+const SPEED = 5;
 const ROTATIONAL_SPEED = 0.15;
 const FRICTION = 0.97;
-const PROJECTILE_SPEED = 8;
+const PROJECTILE_SPEED = 9;
 
 const projectiles = [];
 const asteroids = [];
@@ -158,7 +158,7 @@ const intervalId = window.setInterval(() => {
       x = Math.random() * canvas.width;
       y = canvas.height + radius;
       vx = 0;
-      vy = -3;
+      vy = -4;
       break;
     case 2: // right side of the screen without margin
       x = canvas.width + radius;
